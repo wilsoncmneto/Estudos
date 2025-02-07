@@ -14,9 +14,9 @@ body {
 }
 
 
-
+/*dica de como centralizar o cabeçalho*/
 header {
-    
+    /*dica de como centralizar o cabeçalho*/
     position: fixed;
     width: 80vw;
     left: 50%;
@@ -73,12 +73,12 @@ section {
                 height: 100%;
                 display: flex;
                 flex-direction: column;
-                justify-content: center; 
-                align-items: end; 
+                justify-content: center; /* joga todo mundo para centro*/
+                align-items: end; /* todo mundo para direita */
                 gap: 20px;
 
                 & .car-information {
-                    font-weight: bold; 
+                    font-weight: bold; /* deixa ele negrita */
                 }
 
                 & h2 {
@@ -90,15 +90,15 @@ section {
                 & .description {
                     color: #d9d9d9;
                     font-size: 12px;
-                    text-align: right; 
-                    max-width: 400px;
+                    text-align: right; /* coloca o texto ao lado direito */
+                    max-width: 400px; /* Maxima da distancia a direita */
                 }
 
                 & .information {
-                    border-radius: 30px;
+                    border-radius: 30px; /* Borda arrendondada */
                     height: 35px;
                     width: 120px;
-                    text-transform: uppercase; 
+                    text-transform: uppercase; /* coloca todas as letrar maiúscula */
                     border: 2px solid #791fd3;
                     background-color: #beff1b;
                     cursor: pointer;
@@ -109,7 +109,7 @@ section {
             }
         }
 
-       
+        /* voce coloca coisas antes ou de pois dos itens */
         &::before {
             content: '';
             position: absolute;
@@ -126,13 +126,13 @@ section {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -25px);
-        display: flex; 
+        display: flex; /* ele habilita o justify-content*/
         justify-content: space-between;
 
-        
+        /* :nth-child(1) permite com que eu selecione a primeira img para que não precisa criar um outra classe*/
         & button:nth-child(1) {
             & img {
-                transform: scale(-1); 
+                transform: scale(-1); /*houve a mudança de direção passando da esquerda para a direita*/
 
             }   
         }
@@ -158,7 +158,7 @@ section {
         }
     }  
     
-
+    /* ajuste dos numeros */
     .indicators {
         position: absolute;
         top: 50%;
@@ -167,8 +167,8 @@ section {
         height: 200px;
         width: 90vw;
         display: flex;
-        flex-direction: column;  
-        justify-content: end;  
+        flex-direction: column;  /*coloca um embaixo do outro */
+        justify-content: end;  /*coloca todo mundo para o final*/
         gap: 15px;
 
         & .number{
@@ -180,7 +180,7 @@ section {
             display: flex;
             gap: 10px;
 
-       
+            /*ajuste das barinhas embaixo do nnumero*/
             & li {
                 width: 50px;
                 height: 5px;
@@ -196,3 +196,44 @@ section {
     }
 }
 
+/* agora aqui é a parte da animação do site */
+
+section {
+
+    & .list {
+
+        & .item {
+            transform: translateX(100vh); /* aqui a estrutura das imagens percorre todo o eixo x*/
+            transition: 0.5s;
+
+            & .car-img {    
+                & img {
+                    transform: rotate(0); /* precisamos que a imagem veia reto para de pois fazer a rotação */
+                    transition: 0.5s;
+                    transition-delay: 0.3s;
+                }
+            }
+
+            & .content{
+
+                & .car-information, h2, .description, .information {
+                    transform: translateX(200px);
+                    transition: 0.7s;
+                    transition-delay: 0.3s;
+                }
+                
+                & h2 {
+                    transition-delay: 0.5s;
+                }
+
+                & .description {
+                    transition-delay: 0.7s;
+                }
+
+                & .information {
+                    transition-delay: 0.9s;
+                }
+            }
+        }
+    }
+}
