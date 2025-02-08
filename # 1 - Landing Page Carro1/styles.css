@@ -212,9 +212,10 @@ section {
 section {
 
 	& .list {
+	--calculation: 1; /* essa variavel criada foi colocada para mudar a direção de quando clicado do lado direito a imagem vem do lado direito e quando clicado na seta do lado esquerdo ele vem do lado esquedo, vai ser modificado no javascript */
 
 		& .item {
-			transform: translateX(100vh);
+			transform: translateX(calc(100vw * var(--calculation)));
 			/* aqui a estrutura das imagens percorre todo o eixo x*/
 			transition: 0.5s;
 			opacity: 0;
@@ -232,7 +233,7 @@ section {
 			& .content {
 
 				& .car-information, h2, .description, .information {
-					transform: translateX(200px);
+					transform: translateX(calc(200px * var(--calculation)));
 					transition: 0.7s;
 					transition-delay: 0.3s;
 					opacity: 0;
