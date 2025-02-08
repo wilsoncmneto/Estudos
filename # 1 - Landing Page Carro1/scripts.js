@@ -6,6 +6,7 @@ let container = document.querySelector('.container') // .container
 let items = container.querySelectorAll('.list .item') // Pega todas classe dentro de list e item
 let indicator = document.querySelector('.indicators') // .indicators
 let dots = indicator.querySelectorAll('ul li') // todas ul e li
+let list = container.querySelector('.list')
 
 
 // Passo = é faço a remoçao a classe active da classe atual
@@ -34,6 +35,8 @@ function setSlider(){
 
 nextButton.onclick = () => {    
 
+    list.style.setProperty('--calculation', 1)
+    
     // fazendo a verificação, isso daqui de baixo é mesma coisa de if() - else()
     if (active + 1 > lastPosition) {
         active = 0
@@ -51,6 +54,8 @@ nextButton.onclick = () => {
 }
 
 prevButton.onclick = () => {  
+
+    list.style.setProperty('--calculation', -1)
 
     if (active - 1 < firstPosition) {
         active = lastPosition;  // Volta para o último item
