@@ -1,0 +1,95 @@
+// Capturar evento de submit do formulário para IMC
+const form = document.querySelector('#formulario');
+const botaoTmb = document.querySelector('#calcularTmb');
+
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    calcularIMC();
+});
+
+botaoTmb.addEventListener('click', function () {
+    calcularTMB();
+});
+
+// Função para calcular o IMC
+function calcularIMC() {
+    const inputPeso = document.querySelector('#peso');
+    const inputAltura = document.querySelector('#altura');
+
+    const peso = Number(inputPeso.value);
+    const altura = Number(inputAltura.value);
+
+    if (!peso) {
+        setResultado('Peso inválido', false);
+        return;
+    }
+
+    if (!altura) {
+        setResultado('Altura inválida', false);
+        return;
+    }
+
+    const imc = getImc(peso, altura);
+    const nivelImc = getNivelImc(imc);
+    const msg = `Seu IMC é ${imc} (${nivelImc}).`;
+
+    setResultado(msg, true);
+}
+
+// Função para calcular o TMB
+function calcularTMB() {
+    const peso = Number(document.querySelector('#peso').value);
+    const altura = Number(document.querySelector('#altura').value);
+    const idade = Number(document.querySelector('#idade').value);
+    const genero = document.querySelector('#genero').value;
+    const atividade = Number(document.querySelector('#atividade').value);
+
+    if (!peso || !altura || !idade) {
+        setResultado('Preencha todos os campos corretamente para calcular o TMB.', false);
+        return;
+    }
+
+    const tmb = getTmb(peso, altura, idade, genero);
+    const tmbFinal = (tmb * atividade).toFixed(2);
+    const msg = `Seu TMB é ${tmb} kcal/dia e seu gasto calórico total com atividade é ${tmbFinal} kcal/dia.`;
+
+    setResultado(msg, true);
+}
+
+// Função para calcular o IMC
+function getImc(peso, altura) {
+    const imc = peso / (altura ** 2);
+    return imc.toFixed(2);
+}
+
+// Função para determinar o nível do IMC
+function getNivelImc(imc) {
+    const nivel = ['Abaixo do peso', 'Peso normal', 'Sobrepeso', 'Obesidade grau 1', 'Obesidade grau 2', 'Obesidade grau 3'];
+
+    if (imc >= 39.9) return nivel[5];
+    if (imc >= 34.9) return nivel[4];
+    if (imc >= 29.9) return nivel[3];
+    if (imc >= 24.9) return nivel[2];
+    if (imc >= 18.5) return nivel[1];
+    return nivel[0];
+}
+
+// Função para calcular o TMB (Taxa de Metabolismo Basal)
+function getTmb(peso, altura, idade, genero) {
+    if (genero === 'masculino') {
+        return Math.round(88.36 + (13.4 * peso) + (4.8 * altura * 100) - (5.7 * idade));
+    } else {
+        return Math.round(447.6 + (9.2 * peso) + (3.1 * altura * 100) - (4.3 * idade));
+    }
+}
+
+// Função para exibir o resultado na tela
+function setResultado(msg, isValid) {
+    const resultado = document.querySelector('#resultado');
+    resultado.innerHTML = '';
+
+    const p = document.createElement('p');
+    p.classList.add(isValid ? 'paragrafo-resultado' : 'bad');
+    p.innerHTML = msg;
+    resultado.appendChild(p);
+}
