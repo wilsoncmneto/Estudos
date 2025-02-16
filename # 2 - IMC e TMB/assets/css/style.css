@@ -87,3 +87,7 @@ form select:focus {
     outline: 2px solid var(--primary-color);
     background-color: lightyellow;
 }
+
+form .nivelAtividade {
+    margin-top: 10px;
+}
