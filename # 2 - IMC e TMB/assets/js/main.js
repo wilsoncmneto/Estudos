@@ -1,43 +1,13 @@
-// Capturar evento de submit do formulário para IMC
+// Capturar evento de submit do formulário
 const form = document.querySelector('#formulario');
-const botaoTmb = document.querySelector('#calcularTmb');
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
-    calcularIMC();
+    calcularIMCETMB();
 });
 
-botaoTmb.addEventListener('click', function () {
-    calcularTMB();
-});
-
-// Função para calcular o IMC
-function calcularIMC() {
-    const inputPeso = document.querySelector('#peso');
-    const inputAltura = document.querySelector('#altura');
-
-    const peso = Number(inputPeso.value);
-    const altura = Number(inputAltura.value);
-
-    if (!peso) {
-        setResultado('Peso inválido', false);
-        return;
-    }
-
-    if (!altura) {
-        setResultado('Altura inválida', false);
-        return;
-    }
-
-    const imc = getImc(peso, altura);
-    const nivelImc = getNivelImc(imc);
-    const msg = `Seu IMC é ${imc} (${nivelImc}).`;
-
-    setResultado(msg, true);
-}
-
-// Função para calcular o TMB
-function calcularTMB() {
+// Função para calcular IMC e TMB juntos
+function calcularIMCETMB() {
     const peso = Number(document.querySelector('#peso').value);
     const altura = Number(document.querySelector('#altura').value);
     const idade = Number(document.querySelector('#idade').value);
@@ -45,21 +15,26 @@ function calcularTMB() {
     const atividade = Number(document.querySelector('#atividade').value);
 
     if (!peso || !altura || !idade) {
-        setResultado('Preencha todos os campos corretamente para calcular o TMB.', false);
+        setResultado('Preencha todos os campos corretamente.', false);
         return;
     }
 
+    // Cálculo do IMC
+    const imc = getImc(peso, altura);
+    const nivelImc = getNivelImc(imc);
+    const imcMsg = `Seu IMC é ${imc} (${nivelImc}).`;
+
+    // Cálculo do TMB
     const tmb = getTmb(peso, altura, idade, genero);
     const tmbFinal = (tmb * atividade).toFixed(2);
-    const msg = `Seu TMB é ${tmb} kcal/dia e seu gasto calórico total com atividade é ${tmbFinal} kcal/dia.`;
+    const tmbMsg = `Seu TMB é ${tmb} kcal/dia e seu gasto calórico total com atividade é ${tmbFinal} kcal/dia.`;
 
-    setResultado(msg, true);
+    setResultado(`${imcMsg}<br>${tmbMsg}`, true);
 }
 
 // Função para calcular o IMC
 function getImc(peso, altura) {
-    const imc = peso / (altura ** 2);
-    return imc.toFixed(2);
+    return (peso / (altura ** 2)).toFixed(2);
 }
 
 // Função para determinar o nível do IMC
